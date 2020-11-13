@@ -111,10 +111,10 @@ async def getcharinfo(ctx, args, User: discord.User):
 async def help(ctx):
   embed = discord.Embed(title = "Commands")
   embed.add_field(name="!ping", value = "Every bot has this I guess.", inline=False)
-  embed.add_field(name="!setcharname <character name> [@mention yourself]", value="Sets your character name. Only usable for one character. To add a last name, wrap the name in quotation marks.", inline=False)
+  embed.add_field(name="!setcharname <character name> [@mention yourself]", value = "Sets your character name.", inline=False)
   embed.add_field(name="!setcharclass <character class> [@mention yourself]", value="Set's your character's class. Only useable once.", inline = False)
   embed.add_field(name="!setcharinventory \"<item, item, item, etc.>\" [@mention yourself]", value="Sets items in your inventory. Separate items with commas for ease of readibility.", inline=False)
-  embed.add_embed(name="!charismaset <value> [@mention yourself", value="Sets your character's charisma stat.", inline = False)
+  embed.add_field(name="!charismaset <value> [@mention yourself", value="Sets your character's charisma stat.", inline = False)
   embed.add_field(name="!getcharinfo <name, class, level, inventory, stats, all> [@mention yourself]", value="Gathers and sends character info.", inline = False)
   embed.add_field(name="!help", value = "This help message.", inline = False)
   embed.set_footer(text="Made by D&D Bot")
