@@ -158,6 +158,14 @@ async def delchar(ctx, User: discord.User):
     del db[User.id, 'inv']
   except:
     print("Error 4")  
+  try:
+    del db[User.id, 'charisma']
+  except:
+    print("Error 5")
+  try:
+    del db[User.id, 'wisdom']
+  except:
+    print("Error 5")
 
 
 keep_alive.keep_alive()
