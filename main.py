@@ -66,6 +66,7 @@ async def getcharinfo(ctx, args, User: discord.User):
     try:
       charlevelget = db[User.id, 'level']
       embed = discord.Embed(title="Character Level", description = charlevelget)
+      embed.set_footer(text="Made by D&D Bot")
       await ctx.send(embed=embed)
     except:
       await ctx.send("User does not have a level set.")
@@ -73,6 +74,7 @@ async def getcharinfo(ctx, args, User: discord.User):
     try:
       charinvget = db[User.id, 'inv']
       embed = discord.Embed(title="Character Inventory", description = charinvget)
+      embed.set_footer(text="Made by D&D Bot")
       await ctx.send(embed = embed)
     except:
       await ctx.send("User does not have an inventory set.")
@@ -81,6 +83,7 @@ async def getcharinfo(ctx, args, User: discord.User):
       charcharismaget = db[User.id, 'charisma']
       embed = discord.Embed(title = "Character Stats")
       embed.add_field(name='Charisma', value = charcharismaget, inline = True)
+      embed.set_footer(text="Made by D&D Bot")
       await ctx.send(embed=embed)
     except:
       await ctx.send("That user has not specified any stats yet.")
@@ -96,7 +99,7 @@ async def getcharinfo(ctx, args, User: discord.User):
       embed.add_field(name="Class", value=charclassget, inline=True)
       embed.add_field(name="Level", value = charlevelget, inline = True)
       embed.add_field(name="Inventory", value = charinvget, inline = True)
-      embed.add_field(name= "Stats", value = "Charisma:  " + charcharismaget, inline = )
+      embed.add_field(name="Stats", value = "Charisma:  " + charcharismaget, inline=True)
       embed.set_footer(text="Made by D&D Bot")
       await ctx.send(embed=embed)
     except:
