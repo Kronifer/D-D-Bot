@@ -4,8 +4,6 @@ import os
 from dotenv import load_dotenv
 from replit import db
 import keep_alive
-global botcreator
-botcreator = 578643105931329578
 
 token = os.getenv('bottoken')
 
@@ -16,6 +14,12 @@ bot = commands.Bot(command_prefix='!', help_command = None)
 @bot.command()
 async def ping(ctx):
     await ctx.send('pong')
+
+@bot.command(pass_context=True)
+@commands.has_role('Bot Creator')
+async def dm(ctx, args, User: discord.User):
+  await ctx.send("Sent message to user.")
+  await User.send(args)
 
 @bot.command()
 async def setcharname(ctx, args, User: discord.User):
@@ -107,7 +111,7 @@ async def getcharinfo(ctx, args, User: discord.User):
       embed.add_field(name="Class", value=charclassget, inline=True)
       embed.add_field(name="Level", value = charlevelget, inline = True)
       embed.add_field(name="Inventory", value = charinvget, inline = True)
-      embed.add_field(name="Stats", value = "Charisma:  " + charcharismaget +". Wisdom:  " + wisdomget, inline=True)
+      embed.add_field(name="Stats", value = "Charisma:  " + charcharismaget +"  Wisdom:  " + wisdomget, inline=True)
       embed.set_footer(text="Made by D&D Bot")
       await ctx.send(embed=embed)
     except:
