@@ -41,6 +41,11 @@ async def charismaset(ctx, args, User: discord.User):
   await User.send("Setting *" + args + "* as your charisma stat.")
   newcharisma = db[User.id, 'charisma'] = args
 
+@bot.command()
+async def wisdomset(ctx, args, User: discord.User):
+  await User.send("Setting *" + args + "* as your wisdom stat.")
+  newwisdom = db[User.id, 'wisdom'] = args
+
 
 
 
@@ -81,8 +86,10 @@ async def getcharinfo(ctx, args, User: discord.User):
   elif(args == "stats"):
     try:
       charcharismaget = db[User.id, 'charisma']
+      wisdomget = db[User.id, 'wisdom']
       embed = discord.Embed(title = "Character Stats")
       embed.add_field(name='Charisma', value = charcharismaget, inline = True)
+      embed.add_field(name='Wisdom', value = wisdomget)
       embed.set_footer(text="Made by D&D Bot")
       await ctx.send(embed=embed)
     except:
@@ -94,12 +101,13 @@ async def getcharinfo(ctx, args, User: discord.User):
       charlevelget = db[User.id, 'level']
       charinvget = db[User.id, 'inv']
       charcharismaget = db[User.id, 'charisma']
+      wisdomget =db[User.id, 'wisdom']
       embed=discord.Embed(title="Character Info")
       embed.add_field(name="Name", value=charnameget, inline=True)
       embed.add_field(name="Class", value=charclassget, inline=True)
       embed.add_field(name="Level", value = charlevelget, inline = True)
       embed.add_field(name="Inventory", value = charinvget, inline = True)
-      embed.add_field(name="Stats", value = "Charisma:  " + charcharismaget, inline=True)
+      embed.add_field(name="Stats", value = "Charisma:  " + charcharismaget +". Wisdom:  " + wisdomget, inline=True)
       embed.set_footer(text="Made by D&D Bot")
       await ctx.send(embed=embed)
     except:
@@ -115,6 +123,7 @@ async def help(ctx):
   embed.add_field(name="!setcharclass <character class> [@mention yourself]", value="Set's your character's class. Only useable once.", inline = False)
   embed.add_field(name="!setcharinventory \"<item, item, item, etc.>\" [@mention yourself]", value="Sets items in your inventory. Separate items with commas for ease of readibility.", inline=False)
   embed.add_field(name="!charismaset <value> [@mention yourself", value="Sets your character's charisma stat.", inline = False)
+  embed.add_field(name="!wisdomset <value> [@mention yourself]", value="Sets your chara ter's wisdom stat.", inline = False)
   embed.add_field(name="!getcharinfo <name, class, level, inventory, stats, all> [@mention yourself]", value="Gathers and sends character info.", inline = False)
   embed.add_field(name="!help", value = "This help message.", inline = False)
   embed.set_footer(text="Made by D&D Bot")
