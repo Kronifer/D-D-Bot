@@ -37,6 +37,14 @@ async def setcharinventory(ctx, args, User: discord.User):
   newcharinv = db[User.id, 'inv'] = args
 
 @bot.command()
+async def charismaset(ctx, args, User: discord.User):
+  await User.send("Setting *" + args + "* as your charisma stat.")
+  newcharisma = db[User.id, 'charisma'] = args
+
+
+
+
+@bot.command()
 async def getcharinfo(ctx, args, User: discord.User):
   if(args == 'name'):
     try:
