@@ -4,6 +4,8 @@ import os
 from dotenv import load_dotenv
 from replit import db
 import keep_alive
+import random
+
 
 token = os.getenv('bottoken')
 
@@ -65,6 +67,16 @@ async def dexterityset(ctx, args, User: discord.User):
   await User.send("Setting *" + args + '* as your dexterity stat.')
   newdext = db[User.id, 'dext'] = args
 
+@bot.command()
+async def strengthset(ctx, args, User: discord.User):
+  await User.send("Setting *" + args + "* as your strength stat.")
+  newstrength = db[User.id, 'str'] = args
+
+@bot.command()
+async def dicerolld20(ctx):
+  d20roll = random.randint(1, 20)
+  embed = discord.Embed(title = "D20 roll", description=d20roll)
+  await ctx.send(embed=embed)
 
 
 
@@ -108,11 +120,15 @@ async def getcharinfo(ctx, args, User: discord.User):
       wisdomget = db[User.id, 'wisdom']
       intelligenceget = db[User.id, 'intelligence']
       constget = db[User.id, 'const']
+      dextget = db[User.id, 'dext']
+      strget = db[User.id, 'str']
       embed = discord.Embed(title = "Character Stats")
       embed.add_field(name='Charisma', value = charcharismaget, inline = True)
       embed.add_field(name='Wisdom', value = wisdomget, inline = True)
       embed.add_field(name='Intelligence', value = intelligenceget, inline = True)
       embed.add_field(name="Constitution", value = constget, inline = True)
+      embed.add_field(name="Dexterity", value = dextget, inline = True)
+      embed.add_field(name = "Strength", value = strget, inline = True)
       embed.set_footer(text="Made by D&D Bot")
       await ctx.send(embed=embed)
     except:
@@ -126,13 +142,15 @@ async def getcharinfo(ctx, args, User: discord.User):
       charcharismaget = db[User.id, 'charisma']
       wisdomget = db[User.id, 'wisdom']
       constget = db[User.id, 'const']
+      dextget = db[User.id, 'dext']
       intelligenceget = db[User.id, 'intelligence']
+      strget = db[User.id, 'str']
       embed=discord.Embed(title= "Character Info")
       embed.add_field(name="Name", value=charnameget, inline=True)
       embed.add_field(name="Class", value=charclassget, inline=True)
       embed.add_field(name="Level", value = charlevelget, inline = True)
       embed.add_field(name="Inventory", value = charinvget, inline = True)
-      embed.add_field(name="Stats", value = "Charisma:  " + charcharismaget +"  Wisdom:  " + wisdomget + "   Intelligence:  " + intelligenceget + "  Constitution:  " + constget, inline=True)
+      embed.add_field(name="Stats", value = "Charisma:  " + charcharismaget +"  Wisdom:  " + wisdomget + "   Intelligence:  " + intelligenceget + "  Constitution:  " + constget + "  Dexterity:  " + dextget + "  Strength:  " + strget, inline=True)
       embed.set_footer(text="Made by D&D Bot")
       await ctx.send(embed=embed)
     except:
@@ -151,6 +169,9 @@ async def help(ctx):
   embed.add_field(name="!wisdomset <value> [@mention yourself]", value="Sets your character's wisdom stat.", inline = False)
   embed.add_field(name = "!intelligenceset <value> [@mention yourself]", value="Sets your character's intelligence stat.", inline = False)
   embed.add_field(name = "!constitutionset <value> [@mention yourself]", value="Sets your character's constitution stat.", inline = False)
+  embed.add_field(name="!dexterityset <value> [@mention yourself]", value = "Sets your character's dexterity stat.", inline = False)
+  embed.add_field(name="!strengthset <value> [@mention yourself]", value = "Sets your character's strength stat.", inline = False)
+  embed.add_field(name="!dicerolld20", value = "Rolls a D20.", value = Fals)
   embed.add_field(name="!getcharinfo <name, class, level, inventory, stats, all> [@mention yourself]", value="Gathers and sends character info.", inline = False)
   embed.add_field(name="!help", value = "This help message.", inline = False)
   embed.set_footer(text="Made by D&D Bot")
