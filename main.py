@@ -55,6 +55,16 @@ async def intelligenceset(ctx, args, User: discord.User):
   await User.send("Setting *" + args + "* as your intelligence stat.")
   newintelligence = db[User.id, 'intelligence'] = args
 
+@bot.command()
+async def constitutionset(ctx, args, User: discord.User):
+  await User.send("Setting *" + args + "* as your constitution stat.")
+  newconst = db[User.id, 'const'] = args  
+
+@bot.command()
+async def dexterityset(ctx, args, User: discord.User):
+  await User.send("Setting *" + args + '* as your dexterity stat.')
+  newdext = db[User.id, 'dext'] = args
+
 
 
 
@@ -97,10 +107,12 @@ async def getcharinfo(ctx, args, User: discord.User):
       charcharismaget = db[User.id, 'charisma']
       wisdomget = db[User.id, 'wisdom']
       intelligenceget = db[User.id, 'intelligence']
+      constget = db[User.id, 'const']
       embed = discord.Embed(title = "Character Stats")
       embed.add_field(name='Charisma', value = charcharismaget, inline = True)
-      embed.add_field(name='Wisdom', value = wisdomget)
-      embed.add_field(name='Wisdom', value = intelligenceget)
+      embed.add_field(name='Wisdom', value = wisdomget, inline = True)
+      embed.add_field(name='Intelligence', value = intelligenceget, inline = True)
+      embed.add_field(name="Constitution", value = constget, inline = True)
       embed.set_footer(text="Made by D&D Bot")
       await ctx.send(embed=embed)
     except:
@@ -113,13 +125,14 @@ async def getcharinfo(ctx, args, User: discord.User):
       charinvget = db[User.id, 'inv']
       charcharismaget = db[User.id, 'charisma']
       wisdomget = db[User.id, 'wisdom']
+      constget = db[User.id, 'const']
       intelligenceget = db[User.id, 'intelligence']
-      embed=discord.Embed(title="Character Info")
+      embed=discord.Embed(title= "Character Info")
       embed.add_field(name="Name", value=charnameget, inline=True)
       embed.add_field(name="Class", value=charclassget, inline=True)
       embed.add_field(name="Level", value = charlevelget, inline = True)
       embed.add_field(name="Inventory", value = charinvget, inline = True)
-      embed.add_field(name="Stats", value = "Charisma:  " + charcharismaget +"  Wisdom:  " + wisdomget + "   Intelligence:  " + intelligenceget, inline=True)
+      embed.add_field(name="Stats", value = "Charisma:  " + charcharismaget +"  Wisdom:  " + wisdomget + "   Intelligence:  " + intelligenceget + "  Constitution:  " + constget, inline=True)
       embed.set_footer(text="Made by D&D Bot")
       await ctx.send(embed=embed)
     except:
@@ -134,9 +147,10 @@ async def help(ctx):
   embed.add_field(name="!setcharname <character name> [@mention yourself]", value = "Sets your character name.", inline=False)
   embed.add_field(name="!setcharclass <character class> [@mention yourself]", value="Set's your character's class. Only useable once.", inline = False)
   embed.add_field(name="!setcharinventory \"<item, item, item, etc.>\" [@mention yourself]", value="Sets items in your inventory. Separate items with commas for ease of readibility.", inline=False)
-  embed.add_field(name="!charismaset <value> [@mention yourself", value="Sets your character's charisma stat.", inline = False)
+  embed.add_field(name="!charismaset <value> [@mention yourself]", value="Sets your character's charisma stat.", inline = False)
   embed.add_field(name="!wisdomset <value> [@mention yourself]", value="Sets your character's wisdom stat.", inline = False)
-  embed.add_field(name = "!intelligenceset <value> [@mention yourself]", value="set's your character's intelligence stat.", inline = False)
+  embed.add_field(name = "!intelligenceset <value> [@mention yourself]", value="Sets your character's intelligence stat.", inline = False)
+  embed.add_field(name = "!constitutionset <value> [@mention yourself]", value="Sets your character's constitution stat.", inline = False)
   embed.add_field(name="!getcharinfo <name, class, level, inventory, stats, all> [@mention yourself]", value="Gathers and sends character info.", inline = False)
   embed.add_field(name="!help", value = "This help message.", inline = False)
   embed.set_footer(text="Made by D&D Bot")
