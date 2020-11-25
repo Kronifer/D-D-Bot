@@ -78,6 +78,11 @@ async def dicerolld20(ctx):
   embed = discord.Embed(title = "D20 roll", description=d20roll)
   await ctx.send(embed=embed)
 
+@bot.command()
+async def setcharrace(ctx, args, User: discord.User):
+  await User.send("Setting *" + args + "* as your character's race.")
+  newrace = db[User.id, "race"] = args
+
 
 
 @bot.command()
@@ -90,6 +95,14 @@ async def getcharinfo(ctx, args, User: discord.User):
       await ctx.send(embed=embed)
     except:
       await ctx.send("User does not have a character name set.")
+  elif(args == 'race'):
+    try:
+      charraceget = db[User.id, "race"]
+      embed = discord.Embed(title="Character Race", description = charraceget)
+      embed.set_footer(text='Made by D&D Bot')
+      await ctx.send(embed=embed)
+    except:
+      await ctx.send("User does not yet have a set race.")
   elif(args == "class"):
     try:
       charclassget = db[User.id, 'charclass']
@@ -145,8 +158,10 @@ async def getcharinfo(ctx, args, User: discord.User):
       dextget = db[User.id, 'dext']
       intelligenceget = db[User.id, 'intelligence']
       strget = db[User.id, 'str']
+      charraceget = db[User.id, "race"]
       embed=discord.Embed(title= "Character Info")
       embed.add_field(name="Name", value=charnameget, inline=True)
+      embed.add_field(name="Race", value = charraceget, inline=True)
       embed.add_field(name="Class", value=charclassget, inline=True)
       embed.add_field(name="Level", value = charlevelget, inline = True)
       embed.add_field(name="Inventory", value = charinvget, inline = True)
@@ -163,6 +178,7 @@ async def help(ctx):
   embed = discord.Embed(title = "Commands")
   embed.add_field(name="!ping", value = "Every bot has this I guess.", inline=False)
   embed.add_field(name="!setcharname <character name> [@mention yourself]", value = "Sets your character name.", inline=False)
+  embed.add_field(name="!setcharrace \"<Character Race>\" [@mention yourself]", value = "Sets your characters race.", inline = False)
   embed.add_field(name="!setcharclass <character class> [@mention yourself]", value="Set's your character's class. Only useable once.", inline = False)
   embed.add_field(name="!setcharinventory \"<item, item, item, etc.>\" [@mention yourself]", value="Sets items in your inventory. Separate items with commas for ease of readibility.", inline=False)
   embed.add_field(name="!charismaset <value> [@mention yourself]", value="Sets your character's charisma stat.", inline = False)
@@ -171,7 +187,7 @@ async def help(ctx):
   embed.add_field(name = "!constitutionset <value> [@mention yourself]", value="Sets your character's constitution stat.", inline = False)
   embed.add_field(name="!dexterityset <value> [@mention yourself]", value = "Sets your character's dexterity stat.", inline = False)
   embed.add_field(name="!strengthset <value> [@mention yourself]", value = "Sets your character's strength stat.", inline = False)
-  embed.add_field(name="!dicerolld20", value = "Rolls a D20.", value = Fals)
+  embed.add_field(name="!dicerolld20", value = "Rolls a D20.", inline = False)
   embed.add_field(name="!getcharinfo <name, class, level, inventory, stats, all> [@mention yourself]", value="Gathers and sends character info.", inline = False)
   embed.add_field(name="!help", value = "This help message.", inline = False)
   embed.set_footer(text="Made by D&D Bot")
