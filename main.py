@@ -1,12 +1,10 @@
 import discord
 from discord.ext import commands
-import os
-from dotenv import load_dotenv
+import os 
 from replit import db
 import keep_alive
 import random
-
-
+ 
 token = os.getenv('bottoken')
 
 client = discord.Client()
@@ -77,13 +75,21 @@ async def dicerolld20(ctx):
   d20roll = random.randint(1, 20)
   embed = discord.Embed(title = "D20 roll", description=d20roll)
   await ctx.send(embed=embed)
+@bot.command()
+async def dicerolld8(ctx):
+  d8roll = random.randint(1, 8)
+  embed = discord.Embed(title = "D8 roll", description = d8roll)
+  await ctx.send(embed = embed)
 
 @bot.command()
 async def setcharrace(ctx, args, User: discord.User):
   await User.send("Setting *" + args + "* as your character's race.")
   newrace = db[User.id, "race"] = args
 
-
+@bot.command()
+async def setcharalignment(ctx, args, User: discord.User):
+  await User.send("Setting *" + args + "* as your character's alignment.")
+  newalign = db[User.id, 'align'] = args
 
 @bot.command()
 async def getcharinfo(ctx, args, User: discord.User):
@@ -95,6 +101,13 @@ async def getcharinfo(ctx, args, User: discord.User):
       await ctx.send(embed=embed)
     except:
       await ctx.send("User does not have a character name set.")
+  elif (args == 'alignment'):
+    try:
+      alignget = db[User.id, 'align']
+      embed = discord.Embed(title="Character Alignment", description = alignget)
+      await ctx.send(embed=embed)
+    except:
+      await ctx.send("User has not yet set an alignment.")
   elif(args == 'race'):
     try:
       charraceget = db[User.id, "race"]
@@ -159,12 +172,14 @@ async def getcharinfo(ctx, args, User: discord.User):
       intelligenceget = db[User.id, 'intelligence']
       strget = db[User.id, 'str']
       charraceget = db[User.id, "race"]
+      alignget = db[User.id, 'align']
       embed=discord.Embed(title= "Character Info")
       embed.add_field(name="Name", value=charnameget, inline=True)
       embed.add_field(name="Race", value = charraceget, inline=True)
       embed.add_field(name="Class", value=charclassget, inline=True)
       embed.add_field(name="Level", value = charlevelget, inline = True)
       embed.add_field(name="Inventory", value = charinvget, inline = True)
+      embed.add_field(name="Alignment", value = alignget, inline = True)
       embed.add_field(name="Stats", value = "Charisma:  " + charcharismaget +"  Wisdom:  " + wisdomget + "   Intelligence:  " + intelligenceget + "  Constitution:  " + constget + "  Dexterity:  " + dextget + "  Strength:  " + strget, inline=True)
       embed.set_footer(text="Made by D&D Bot")
       await ctx.send(embed=embed)
@@ -181,6 +196,7 @@ async def help(ctx):
   embed.add_field(name="!setcharrace \"<Character Race>\" [@mention yourself]", value = "Sets your characters race.", inline = False)
   embed.add_field(name="!setcharclass <character class> [@mention yourself]", value="Set's your character's class. Only useable once.", inline = False)
   embed.add_field(name="!setcharinventory \"<item, item, item, etc.>\" [@mention yourself]", value="Sets items in your inventory. Separate items with commas for ease of readibility.", inline=False)
+  embed.add_field(name="!setcharalignment \"<Alignment>\" [@mention yourself]", value = "Set's your characters Alignment.", inline = False)
   embed.add_field(name="!charismaset <value> [@mention yourself]", value="Sets your character's charisma stat.", inline = False)
   embed.add_field(name="!wisdomset <value> [@mention yourself]", value="Sets your character's wisdom stat.", inline = False)
   embed.add_field(name = "!intelligenceset <value> [@mention yourself]", value="Sets your character's intelligence stat.", inline = False)
